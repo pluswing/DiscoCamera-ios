@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:DiscoCamra.xcodeproj">
+      location = "self:/Users/pluswing/develop/ios/DiscoCamra/DiscoCamera.xcodeproj">
    </FileRef>
 </Workspace>

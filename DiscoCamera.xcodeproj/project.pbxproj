@@ -34,17 +34,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		358162922144FCDA0048925B /* DiscoCamra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscoCamra.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		358162922144FCDA0048925B /* DiscoCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscoCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		358162952144FCDA0048925B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		358162972144FCDA0048925B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3581629A2144FCDA0048925B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3581629C2144FCDE0048925B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3581629F2144FCDE0048925B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		358162A12144FCDE0048925B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		358162A62144FCDE0048925B /* DiscoCamraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiscoCamraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		358162A62144FCDE0048925B /* DiscoCameraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiscoCameraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		358162AA2144FCDE0048925B /* DiscoCamraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoCamraTests.swift; sourceTree = "<group>"; };
 		358162AC2144FCDE0048925B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		358162B12144FCDE0048925B /* DiscoCamraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiscoCamraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		358162B12144FCDE0048925B /* DiscoCameraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiscoCameraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		358162B52144FCDE0048925B /* DiscoCamraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoCamraUITests.swift; sourceTree = "<group>"; };
 		358162B72144FCDE0048925B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,9 +87,9 @@
 		358162932144FCDA0048925B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				358162922144FCDA0048925B /* DiscoCamra.app */,
-				358162A62144FCDE0048925B /* DiscoCamraTests.xctest */,
-				358162B12144FCDE0048925B /* DiscoCamraUITests.xctest */,
+				358162922144FCDA0048925B /* DiscoCamera.app */,
+				358162A62144FCDE0048925B /* DiscoCameraTests.xctest */,
+				358162B12144FCDE0048925B /* DiscoCameraUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,9 +128,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		358162912144FCDA0048925B /* DiscoCamra */ = {
+		358162912144FCDA0048925B /* DiscoCamera */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 358162BA2144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCamra" */;
+			buildConfigurationList = 358162BA2144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCamera" */;
 			buildPhases = (
 				3581628E2144FCDA0048925B /* Sources */,
 				3581628F2144FCDA0048925B /* Frameworks */,
@@ -140,14 +140,14 @@
 			);
 			dependencies = (
 			);
-			name = DiscoCamra;
+			name = DiscoCamera;
 			productName = DiscoCamra;
-			productReference = 358162922144FCDA0048925B /* DiscoCamra.app */;
+			productReference = 358162922144FCDA0048925B /* DiscoCamera.app */;
 			productType = "com.apple.product-type.application";
 		};
-		358162A52144FCDE0048925B /* DiscoCamraTests */ = {
+		358162A52144FCDE0048925B /* DiscoCameraTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 358162BD2144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCamraTests" */;
+			buildConfigurationList = 358162BD2144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCameraTests" */;
 			buildPhases = (
 				358162A22144FCDE0048925B /* Sources */,
 				358162A32144FCDE0048925B /* Frameworks */,
@@ -158,14 +158,14 @@
 			dependencies = (
 				358162A82144FCDE0048925B /* PBXTargetDependency */,
 			);
-			name = DiscoCamraTests;
+			name = DiscoCameraTests;
 			productName = DiscoCamraTests;
-			productReference = 358162A62144FCDE0048925B /* DiscoCamraTests.xctest */;
+			productReference = 358162A62144FCDE0048925B /* DiscoCameraTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		358162B02144FCDE0048925B /* DiscoCamraUITests */ = {
+		358162B02144FCDE0048925B /* DiscoCameraUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 358162C02144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCamraUITests" */;
+			buildConfigurationList = 358162C02144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCameraUITests" */;
 			buildPhases = (
 				358162AD2144FCDE0048925B /* Sources */,
 				358162AE2144FCDE0048925B /* Frameworks */,
@@ -176,9 +176,9 @@
 			dependencies = (
 				358162B32144FCDE0048925B /* PBXTargetDependency */,
 			);
-			name = DiscoCamraUITests;
+			name = DiscoCameraUITests;
 			productName = DiscoCamraUITests;
-			productReference = 358162B12144FCDE0048925B /* DiscoCamraUITests.xctest */;
+			productReference = 358162B12144FCDE0048925B /* DiscoCameraUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -204,7 +204,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3581628D2144FCDA0048925B /* Build configuration list for PBXProject "DiscoCamra" */;
+			buildConfigurationList = 3581628D2144FCDA0048925B /* Build configuration list for PBXProject "DiscoCamera" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -217,9 +217,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				358162912144FCDA0048925B /* DiscoCamra */,
-				358162A52144FCDE0048925B /* DiscoCamraTests */,
-				358162B02144FCDE0048925B /* DiscoCamraUITests */,
+				358162912144FCDA0048925B /* DiscoCamera */,
+				358162A52144FCDE0048925B /* DiscoCameraTests */,
+				358162B02144FCDE0048925B /* DiscoCameraUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -282,12 +282,12 @@
 /* Begin PBXTargetDependency section */
 		358162A82144FCDE0048925B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 358162912144FCDA0048925B /* DiscoCamra */;
+			target = 358162912144FCDA0048925B /* DiscoCamera */;
 			targetProxy = 358162A72144FCDE0048925B /* PBXContainerItemProxy */;
 		};
 		358162B32144FCDE0048925B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 358162912144FCDA0048925B /* DiscoCamra */;
+			target = 358162912144FCDA0048925B /* DiscoCamera */;
 			targetProxy = 358162B22144FCDE0048925B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -479,7 +479,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiscoCamra.app/DiscoCamra";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiscoCamera.app/DiscoCamera";
 			};
 			name = Debug;
 		};
@@ -500,7 +500,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiscoCamra.app/DiscoCamra";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiscoCamera.app/DiscoCamera";
 			};
 			name = Release;
 		};
@@ -547,7 +547,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3581628D2144FCDA0048925B /* Build configuration list for PBXProject "DiscoCamra" */ = {
+		3581628D2144FCDA0048925B /* Build configuration list for PBXProject "DiscoCamera" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				358162B82144FCDE0048925B /* Debug */,
@@ -556,7 +556,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		358162BA2144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCamra" */ = {
+		358162BA2144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCamera" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				358162BB2144FCDE0048925B /* Debug */,
@@ -565,7 +565,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		358162BD2144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCamraTests" */ = {
+		358162BD2144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCameraTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				358162BE2144FCDE0048925B /* Debug */,
@@ -574,7 +574,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		358162C02144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCamraUITests" */ = {
+		358162C02144FCDE0048925B /* Build configuration list for PBXNativeTarget "DiscoCameraUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				358162C12144FCDE0048925B /* Debug */,
