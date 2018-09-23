@@ -26,10 +26,14 @@ class ViewController: UIViewController {
     var audioInput: AVAssetWriterInput?
     
     var writing = false
-    var offsetTime = kCMTimeZero
+    var offsetTime = CMTime.zero
     
     var isRecording : Bool = false
     var timer: Timer?
+    
+    var lastPixelBuffer: CVPixelBuffer?
+    var frameCounter = 0
+    var flash = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,7 +113,6 @@ class ViewController: UIViewController {
         }
     }
 
-    
     @IBAction func startCapture(_ sender: Any) {
         if isRecording { // 録画終了
             stopRecording()
@@ -124,7 +127,6 @@ class ViewController: UIViewController {
         isRecording = !isRecording
     }
     
-    var flash = false
     @objc func toggleFlash() {
         if !(videoDevice?.hasTorch ?? false) {
             return
@@ -134,6 +136,7 @@ class ViewController: UIViewController {
             flash = !flash
             if (flash){
                 videoDevice?.torchMode = AVCaptureDevice.TorchMode.on
+                frameCounter = 0
             } else {
                 videoDevice?.torchMode = AVCaptureDevice.TorchMode.off
             }
@@ -245,7 +248,7 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptur
             offsetTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer) // 開始時間を0とするために、開始時間をoffSetに保存する
             writer?.startWriting()
             print("startwriting")
-            writer?.startSession(atSourceTime: kCMTimeZero) // 開始時間を0で初期化する
+            writer?.startSession(atSourceTime: CMTime.zero) // 開始時間を0で初期化する
             writing = true
         }
         
@@ -257,56 +260,22 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptur
         var copyBuffer : CMSampleBuffer?
         var count: CMItemCount = 1
         var info = CMSampleTimingInfo()
-        CMSampleBufferGetSampleTimingInfoArray(sampleBuffer, count, &info, &count)
+        CMSampleBufferGetSampleTimingInfoArray(sampleBuffer, entryCount: count, arrayToFill: &info, entriesNeededOut: &count)
         info.presentationTimeStamp = CMTimeSubtract(info.presentationTimeStamp, offsetTime)
-        CMSampleBufferCreateCopyWithNewTiming(kCFAllocatorDefault,sampleBuffer,1,&info,&copyBuffer)
+        CMSampleBufferCreateCopyWithNewTiming(allocator: kCFAllocatorDefault,sampleBuffer: sampleBuffer,sampleTimingEntryCount: 1,sampleTimingArray: &info,sampleBufferOut: &copyBuffer)
         
         if isVideo {
             if (videoInput?.isReadyForMoreMediaData)! {
-                
+                frameCounter += 1
                 let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
-                if (flash) {
+                if (flash && frameCounter > 1) {
                     videoInputAdapter?.append(pixelBuffer!, withPresentationTime: info.presentationTimeStamp)
+                    lastPixelBuffer = pixelBuffer!
                 } else {
-                    // flashがOFFの時は真っ黒にする
-                    
-                    // let ciImage = CIImage(cvPixelBuffer: pixelBuffer!)
-                    let pixelBufferWidth = CGFloat(CVPixelBufferGetWidth(pixelBuffer!))
-                    let pixelBufferHeight = CGFloat(CVPixelBufferGetHeight(pixelBuffer!))
-                    // let imageRect = CGRect(x: 0, y: 0, width: pixelBufferWidth, height: pixelBufferHeight)
-                    // let ciContext = CIContext.init()
-                    // let cgImage = ciContext.createCGImage(ciImage, from: imageRect)
-                    // let image = UIImage(cgImage: cgImage!)
-                    
-                    // Make black UIImage
-                    let size = CGSize(width: pixelBufferWidth, height: pixelBufferHeight)
-                    UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-                    let context = UIGraphicsGetCurrentContext()!
-                    context.setFillColor(red: 0, green: 0, blue: 0, alpha: 1)
-                    context.fill(CGRect(origin: .zero, size: size))
-                    let image = UIGraphicsGetImageFromCurrentImageContext()!
-                    UIGraphicsEndImageContext()
-                    
-                    // convert UIImage to CVPixelBuffer
-                    let cgImage: CGImage = image.cgImage!
-                    let options = [
-                        kCVPixelBufferCGImageCompatibilityKey as String: true,
-                        kCVPixelBufferCGBitmapContextCompatibilityKey as String: true
-                    ]
-                    var pxBuffer: CVPixelBuffer? = nil
-                    let width: Int = cgImage.width
-                    let height: Int = cgImage.height
-                    CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_32ARGB, options as CFDictionary?, &pxBuffer)
-                    CVPixelBufferLockBaseAddress(pxBuffer!, CVPixelBufferLockFlags(rawValue: 0))
-                    let pxData: UnsafeMutableRawPointer = CVPixelBufferGetBaseAddress(pxBuffer!)!
-                    let bitsPerComponent: size_t = 8
-                    let bytePerRow: size_t = 4 * width
-                    let rgbColorSpace: CGColorSpace = CGColorSpaceCreateDeviceRGB()
-                    let _: CGContext = CGContext(data: pxData, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytePerRow, space: rgbColorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)!
-                    context.draw(cgImage, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
-                    CVPixelBufferUnlockBaseAddress(pxBuffer!, CVPixelBufferLockFlags(rawValue: 0))
-                    
-                    videoInputAdapter?.append(pxBuffer!, withPresentationTime: info.presentationTimeStamp)
+                    // flashがOFFの時はフラッシュ点灯時のピクセルバッファを使い回す＝一時停止状態
+                    if lastPixelBuffer != nil {
+                        videoInputAdapter?.append(lastPixelBuffer!, withPresentationTime: info.presentationTimeStamp)
+                    }
                 }
                 print("append video")
             }
@@ -318,5 +287,3 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptur
         }
     }
 }
-
-
