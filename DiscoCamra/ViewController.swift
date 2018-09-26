@@ -57,7 +57,6 @@ class ViewController: UIViewController {
         do {
             try vd.lockForConfiguration()
             vd.setExposureModeCustom(duration: minDuration, iso: midISO, completionHandler: { (time) in
-                print("setExposureModeCustom completed!")
             })
             vd.unlockForConfiguration()
         } catch {
@@ -84,7 +83,6 @@ class ViewController: UIViewController {
         let audioDataOutput = AVCaptureAudioDataOutput()
         audioDataOutput.setSampleBufferDelegate(self, queue: videoQueue)
         captureSession.addOutput(audioDataOutput)
-
         
         // プレビュー
         let videoLayer = AVCaptureVideoPreviewLayer.init(session: captureSession)
@@ -96,23 +94,52 @@ class ViewController: UIViewController {
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession.startRunning()
         }
+        
+        if PHPhotoLibrary.authorizationStatus() != .authorized {
+            PHPhotoLibrary.requestAuthorization { (status) in
+                if status != .authorized {
+                    self.alert("フォトライブラリーへのアクセス権限がありません。\n設定からアクセスを許可してください。", ok: { () in
+                        })
+                }
+            }
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        writer?.finishWriting(completionHandler: {
+            self.captureSession.stopRunning()
+            self.writer = nil
+            
+            self.timer?.invalidate()
+            self.timer = nil
+            
+            self.flash = false
+            self.isRecording = false
+            self.writing = false
+            
+            self.lastPixelBuffer = nil
+            self.frameCounter = 0
+        })
+    }
+    
+    func alert(_ message: String, ok: @escaping () -> Void) {
+        let alert: UIAlertController = UIAlertController(title: "ディスコカメラ", message: message, preferredStyle:  UIAlertController.Style.alert)
+        
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            ok()
+        })
+        alert.addAction(defaultAction)
+        present(alert, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    public func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        // ライブラリへの保存
-        PHPhotoLibrary.shared().performChanges({
-            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)
-        }) { completed, error in
-            if completed {
-                print("Video is saved!")
-            }
-        }
-    }
-
     @IBAction func startCapture(_ sender: Any) {
         if isRecording { // 録画終了
             stopRecording()
@@ -142,26 +169,25 @@ class ViewController: UIViewController {
             }
             videoDevice?.unlockForConfiguration()
         } catch {
-            print("Torch could not be used")
+            // FIXME
         }
     }
     
     func stopRecording() {
-        print("stopRecording")
         writer?.finishWriting(completionHandler: {
-            print("finishWriting completed")
             self.fileOutput(self.writer!.outputURL)
         })
     }
     
     func fileOutput(_ outputFileURL: URL) {
         // ライブラリへの保存
-        print("output!")
         PHPhotoLibrary.shared().performChanges({
             PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)
         }) { completed, error in
             if completed {
-                print("Video is saved!")
+                self.alert("保存しました。", ok: {() in })
+            } else {
+                // FIXME
             }
             self.writer = nil
             self.writing = false
@@ -191,7 +217,6 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptur
     }
     
     func initVideoWriter(width: Int, height:Int, channels:Int, samples:Float64) {
-        print("init video writer")
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentsDirectory = paths[0] as String
         let filePath = "\(documentsDirectory)/temp.mp4"
@@ -203,7 +228,6 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptur
             } catch {
             }
         }
-        
         // AVAssetWriter生成
         writer = try? AVAssetWriter(outputURL: fileURL, fileType: AVFileType.mov)
         // Video入力
@@ -247,7 +271,6 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptur
         if isVideo && !writing {
             offsetTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer) // 開始時間を0とするために、開始時間をoffSetに保存する
             writer?.startWriting()
-            print("startwriting")
             writer?.startSession(atSourceTime: CMTime.zero) // 開始時間を0で初期化する
             writing = true
         }
@@ -268,7 +291,7 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptur
             if (videoInput?.isReadyForMoreMediaData)! {
                 frameCounter += 1
                 let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
-                if (flash && frameCounter > 1) {
+                if (flash && frameCounter == 1) {
                     videoInputAdapter?.append(pixelBuffer!, withPresentationTime: info.presentationTimeStamp)
                     lastPixelBuffer = pixelBuffer!
                 } else {
@@ -277,12 +300,10 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptur
                         videoInputAdapter?.append(lastPixelBuffer!, withPresentationTime: info.presentationTimeStamp)
                     }
                 }
-                print("append video")
             }
         } else {
             if (audioInput?.isReadyForMoreMediaData)! {
                 audioInput?.append(copyBuffer!)
-                print("append audio")
             }
         }
     }
