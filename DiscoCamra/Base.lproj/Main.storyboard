@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="DiscoCamra" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="DiscoCamera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,6 +22,13 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WmX-Zo-UCK">
+                                <rect key="frame" x="10" y="686" width="47" height="30"/>
+                                <state key="normal" title="Videos"/>
+                                <connections>
+                                    <action selector="videos:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FpP-Nw-4Qo"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iHA-E4-20c">
                                 <rect key="frame" x="191.66666666666666" y="686" width="31" height="30"/>
                                 <state key="normal" title="録画"/>
@@ -36,7 +43,9 @@
                             <constraint firstItem="CNK-nA-1rU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4Ph-9M-jCy"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="iHA-E4-20c" secondAttribute="bottom" constant="20" id="AbQ-06-7PV"/>
                             <constraint firstItem="CNK-nA-1rU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="g2k-eb-RA1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WmX-Zo-UCK" secondAttribute="bottom" constant="20" id="iul-RV-lGH"/>
                             <constraint firstItem="CNK-nA-1rU" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="s5Z-9v-ITW"/>
+                            <constraint firstItem="WmX-Zo-UCK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="tFW-bF-kub"/>
                             <constraint firstItem="iHA-E4-20c" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ut1-VI-Uxc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -47,7 +56,110 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="37.600000000000001" y="33.733133433283363"/>
+            <point key="canvasLocation" x="36.231884057971016" y="33.423913043478265"/>
+        </scene>
+        <!--Video Collection View Controller-->
+        <scene sceneID="aIF-23-M0S">
+            <objects>
+                <viewController storyboardIdentifier="videoCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0TK-m8-2ZI" customClass="VideoCollectionViewController" customModule="DiscoCamera" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="goG-BV-dLp">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCp-dv-kF1">
+                                <rect key="frame" x="10" y="20" width="39" height="30"/>
+                                <state key="normal" title="Close"/>
+                                <connections>
+                                    <action selector="close:" destination="0TK-m8-2ZI" eventType="touchUpInside" id="WTF-Np-4Tg"/>
+                                </connections>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FkZ-zV-gRj">
+                                <rect key="frame" x="0.0" y="58" width="414" height="678"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iQ2-1n-etb">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="KDc-o4-hBl">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="FkZ-zV-gRj" firstAttribute="top" secondItem="3zI-na-6Hx" secondAttribute="top" constant="38" id="6bs-bI-4tO"/>
+                            <constraint firstItem="FkZ-zV-gRj" firstAttribute="leading" secondItem="3zI-na-6Hx" secondAttribute="leading" id="7Yd-yZ-Fje"/>
+                            <constraint firstItem="eCp-dv-kF1" firstAttribute="top" secondItem="3zI-na-6Hx" secondAttribute="top" id="JSG-5V-1FK"/>
+                            <constraint firstItem="3zI-na-6Hx" firstAttribute="trailing" secondItem="FkZ-zV-gRj" secondAttribute="trailing" id="dLu-KQ-qBv"/>
+                            <constraint firstItem="3zI-na-6Hx" firstAttribute="bottom" secondItem="FkZ-zV-gRj" secondAttribute="bottom" id="f6h-Od-I92"/>
+                            <constraint firstItem="eCp-dv-kF1" firstAttribute="leading" secondItem="3zI-na-6Hx" secondAttribute="leading" constant="10" id="hxi-Me-gvW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="3zI-na-6Hx"/>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="FkZ-zV-gRj" id="90m-fo-KDR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qvf-a9-HMd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="726.08695652173924" y="31.793478260869566"/>
+        </scene>
+        <!--Video Player View Controller-->
+        <scene sceneID="Z4e-e9-YF1">
+            <objects>
+                <viewController storyboardIdentifier="videoPlayerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AkC-Eg-n2F" customClass="VideoPlayerViewController" customModule="DiscoCamera" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="St9-eo-7B0">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Zg-oN-rQp">
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vNy-rq-FYf">
+                                <rect key="frame" x="10" y="30" width="39" height="30"/>
+                                <state key="normal" title="Close"/>
+                                <connections>
+                                    <action selector="close:" destination="AkC-Eg-n2F" eventType="touchUpInside" id="Prc-lh-23q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VoK-0j-fud">
+                                <rect key="frame" x="10" y="696" width="40" height="30"/>
+                                <state key="normal" title="Share"/>
+                                <connections>
+                                    <action selector="share:" destination="AkC-Eg-n2F" eventType="touchUpInside" id="dDD-j6-OQF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5Zg-oN-rQp" firstAttribute="top" secondItem="qXx-9l-cPS" secondAttribute="top" id="13o-3N-BNJ"/>
+                            <constraint firstItem="5Zg-oN-rQp" firstAttribute="trailing" secondItem="qXx-9l-cPS" secondAttribute="trailing" id="8ef-D6-j6a"/>
+                            <constraint firstItem="vNy-rq-FYf" firstAttribute="leading" secondItem="qXx-9l-cPS" secondAttribute="leading" constant="10" id="UId-dq-fhe"/>
+                            <constraint firstItem="vNy-rq-FYf" firstAttribute="top" secondItem="qXx-9l-cPS" secondAttribute="top" constant="10" id="ZeJ-kk-V5H"/>
+                            <constraint firstItem="qXx-9l-cPS" firstAttribute="bottom" secondItem="VoK-0j-fud" secondAttribute="bottom" constant="10" id="aWj-JR-j2f"/>
+                            <constraint firstItem="5Zg-oN-rQp" firstAttribute="leading" secondItem="qXx-9l-cPS" secondAttribute="leading" id="fBK-m8-NT0"/>
+                            <constraint firstItem="5Zg-oN-rQp" firstAttribute="bottom" secondItem="qXx-9l-cPS" secondAttribute="bottom" id="rX5-ET-2UD"/>
+                            <constraint firstItem="VoK-0j-fud" firstAttribute="leading" secondItem="qXx-9l-cPS" secondAttribute="leading" constant="10" id="zES-2I-b2S"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qXx-9l-cPS"/>
+                    </view>
+                    <connections>
+                        <outlet property="videoContainer" destination="5Zg-oN-rQp" id="Nbx-Z8-R5I"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c8Y-t1-yMD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1397.1014492753625" y="28.532608695652176"/>
         </scene>
     </scenes>
 </document>
